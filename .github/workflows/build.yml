@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
-    - name: Install CMake & tools
-      uses: lukka/get-cmake@v3
+    - name: Install CMake
+      uses: lukka/get-cmake@latest
 
     - name: Configure project
       run: cmake -S . -B build -DBUILD_SHARED_LIBS=ON
@@ -22,8 +22,10 @@ jobs:
     - name: Build (Release)
       run: cmake --build build --config Release
 
-    - name: Upload build artifact
-      uses: actions/upload-artifact@v3
+    - name: Upload DLL artifact
+      uses: actions/upload-artifact@v4
       with:
         name: StellaSoraTool-DLL
-        path: build/**/bin/Release/*.dll
+        path: |
+          build/**/*.dll
+          build/**/Release/*.dll
